@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Time of Day</title>
+    <title>Time of Day by Annika Truong</title>
     
     <style>
         /* We target the HTML element directly for our background color swap */
@@ -44,23 +44,101 @@
 <body>
 
     <div class="container">
-        <h1 id="main-greeting">Time of Day by NAME HERE</h1>
+        <h1 id="main-greeting">Time of Day by Annika Truong</h1>
         
         <h2 id="time-text">What time is it?</h2>
+        <h3 id="day-of-week">What day is it?</h3>
 
-        <p>This page will change based on the hour of the day.</p>
-        <p>Add your explanation of what the page does, and how it works here.</p>
+        <p>This page will change based on the day and hour.</p>
+        <p>This page uses JavaScript to determine the current hour, and presents a different image, custom message, and color based on each of the following times of day:</p>
+
+            <div style="width:50%;">
+                <ul>
+                    <li>Morning (5am to 12 noon)</li>
+                    <li>Afternoon (12 noon to 6pm)</li>
+                    <li>Evening (6pm to 11pm)</li>
+                    <li>Night (11pm to 5am) </li>
+                </ul>
+            </div> 
+
+            <p>To do this, I'm using a compound if block and selecting ranges and using the getHours() method of the Date() object.</p>
+            <p>To make changes, I use the <strong>document.getElementById()</strong>  and <strong>document.querySelector()</strong>  to identify items on the page to change.</p>
 
         <img id="time-pic" src="https://dummyimage.com/300x400" alt="Time of Day Image">
     </div>
 
     <script>
+        /*
+            Use JavaScript to determine the current hour, and presents a different image, custom message, and color based on each of the following times of day:
+
+            Morning (5am to 12 noon)
+            Afternoon (12 noon to 6pm)
+            Evening (6pm to 11pm)
+            Night (11pm to 5am) 
+        */
+
         // We will use this section to write our if/else logic
         // Example: document.querySelector('#time-text').innerHTML = "Good Morning!";
         
-        /* Below, we would target the 'html' element to change 
-           the background color using document.querySelector('html') 
-        */
+                /* Below, we would target the 'html' element to change 
+                   the background color using document.querySelector('html') 
+                */
+            let myDate = new Date();
+            let myHour = myDate.getHours();
+            let mySentence = "";
+            let myColor = "";
+            let myPic = "";
+
+            //TESTING ONLY REMOVE FOLLOWING LINE:
+            // myHour = 2;
+
+            if (myHour >=  5 && myHour <  12) {
+                mySentence = "Good Morning!!";
+                myColor = "orange";
+                myPic = "morning.jpg";
+            }else if (myHour >= 12 && myHour < 18){
+                mySentence = "Good Afternoon!!";
+                myColor = "green";
+                myPic = "afternoon.jpg";
+            }else if(myHour >= 18 && myHour < 23){
+                mySentence = "Good Evening!!";
+                myColor = "blue";
+                myPic = "evening.jpg";
+            }else {
+                mySentence = "It's night!";
+                myColor = "purple";
+                myPic = "night.jpg";
+            }
+
+            // adds sentence to page
+            document.getElementById("time-text").innerHTML = mySentence;
+            
+            // adds color to html
+            // document.body.style.backgroundColor = myColor;
+             document.querySelector('html').style.backgroundColor = myColor;
+
+             myPic = "images/" + myPic;
+
+            //  console.log(myPic)
+            //  alert(myPic);  
+
+             // change to our pic
+            document.getElementById("time-pic").src = myPic;
+        
+            // extra credit day of week
+            // this solution is based on previous knowledge
+            // another alt is many else if statements
+            // however i like it as simple as can be..
+            // make an array of the days of week
+            days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+
+            // there are 7 days in a week
+            // arrays always count starting at 0
+            // 7 days = 0, 1, 2, 3, 4 ,5, 6 
+            let myDay = days[myDate.getDay()];
+
+            // replace the text in "day-of-week"
+            document.getElementById("day-of-week").innerHTML = "Today is " + myDay;
 
         // Fixes HTML/CSS Checker links
         document.addEventListener("DOMContentLoaded", function() {
